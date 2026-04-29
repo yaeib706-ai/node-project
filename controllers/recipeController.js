@@ -44,10 +44,8 @@ const getAllRecipes = async (req, res) => {
     const search = (req.query.search || '').trim();
 
     const visibilityFilter = req.user?.id
-      ? {
-          $or: [{ isPublic: true }, { isPublic: false, user: req.user.id }]
-        }
-      : { isPublic: true };
+  ? { $or: [{ isPublic: true }, { isPublic: false, userId: req.user.id }] }
+  : { isPublic: true };
 
     const searchFilter = search
       ? {

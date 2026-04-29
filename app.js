@@ -1,3 +1,4 @@
+const dns = require('dns');
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -5,6 +6,10 @@ const userRoutes = require('./routes/userRoutes');
 const recipeRoutes = require('./routes/recipeRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+
+// Local router DNS (10.100.102.1) refuses Node's UDP SRV queries,
+// which breaks mongodb+srv:// lookups. Force public resolvers.
+dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 dotenv.config();
 
